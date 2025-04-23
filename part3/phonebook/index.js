@@ -1,6 +1,15 @@
 import express from "express";
+import morgan from "morgan";
+
 const app = express();
+
+// JSON middleware
 app.use(express.json());
+
+// Logger middleware
+morgan.token('body', (req, _) => JSON.stringify({name: req.body.name, number: req.body.number}))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+
 const port = 3000;
 
 let persons = [
